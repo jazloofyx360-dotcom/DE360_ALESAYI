@@ -347,7 +347,7 @@ function showLanguageSelection() {
 }
 function setLanguage(selectedLang) { lang = selectedLang; localStorage.setItem('quizLang', lang); showQuizTypeSelection(); }
 function showQuizTypeSelection() {
-  var title = lang === 'ar' ? "اختر نوع الدورة" : "Choose Course Type";
+  var title = lang === 'ar' ? "اختر نوع " : "Choose Course Type";
   var back = lang === 'ar' ? "↩ رجوع" : "↩ Back";
   document.getElementById('app').innerHTML =
     '<h2>' + title + '</h2>' +
