@@ -136,19 +136,26 @@ to { transform: rotateX(360deg) rotateY(360deg); }
 </div>
 <div class="container" id="app"></div>
 <script>
+// Import Firebase core and Firestore
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+
+// Your Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCAgvWlzS6nnYlJBFxEr8CVoqguXNOU7FM",
   authDomain: "de360-742c9.firebaseapp.com",
   projectId: "de360-742c9",
-  storageBucket: "de360-742c9.firebasestorage.app",
+  storageBucket: "de360-742c9.appspot.com",  // corrected the domain
   messagingSenderId: "654625219001",
   appId: "1:654625219001:web:31a0c1eff657410a9e9668"
 };
+
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-console.log('Firebase initialized successfully!');
-// For Firestore:
-const db = firebase.firestore();
+console.log("Firebase initialized successfully!");
+
+// Initialize Firestore
+const db = getFirestore(app);
 
 var lang = localStorage.getItem('quizLang') || null;
 var selectedQuiz = null;
