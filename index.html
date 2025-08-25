@@ -150,6 +150,7 @@ var selectedQuiz = null;
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyEjEXaJJY3bjoqaF7rUtDA0B4Cj4uFXva5WM5Y_pTatdc6H0NWtEIXPqdYaWPZA_qX/exec";
 
 function saveDataToSheet(type, data) {
+  console.log("Sending data:", { type: type, data: data }); // سجّل البيانات المرسلة
   fetch(GOOGLE_SCRIPT_URL, {
     method: "POST",
     body: JSON.stringify({ type: type, data: data }),
