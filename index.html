@@ -477,7 +477,7 @@ function submitRating() {
   // هنا تقدر ترسل البيانات لسيرفر أو تخزنها
   console.log("إجابات التقييم:", responses);
   console.log("تعليق:", comment);
-
+  sendDataToSheet(localStorage.getItem("lastScore"), responses, comment);
   alert("شكراً لتقييمك!");
   localStorage.clear();
   showLanguageSelection();
@@ -518,7 +518,7 @@ function submitQuiz() {
       allAnswered = false; // تعيين المتغير إلى false إذا لم يتم الإجابة
     }
   });
-
+     sendDataToSheet(score, [], "");
   // تحقق من الإجابات
   if (!allAnswered) {
     alert(lang === 'ar' ? "الرجاء الإجابة على جميع الأسئلة قبل الإرسال" : "Please answer all questions before submitting.");
@@ -527,6 +527,35 @@ function submitQuiz() {
 
   showSubmissionConfirmation(score);
 }
+
+function sendDataToSheet(score, answers, comment) {
+  var data = {
+    name: localStorage.getItem("empName"),
+    empId: localStorage.getItem("empId"),
+    empTitle: localStorage.getItem("empTitle"),
+    quiz: selectedQuiz,
+    score: score,
+    answers: answers,
+    comment: comment
+  };
+
+  fetch("https://script.google.com/macros/s/AKfycbx0rXMTUB9Iz74QsvR-Ut7s2vKT1zOsoYyjdnGVNkIknvAqsm1ehXgqIlctfvzUlwxw/exec", {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  .then(res => res.json())
+  .then(res => {
+    console.log("تم الحفظ:", res);
+  })
+  .catch(err => {
+    console.error("خطأ في الإرسال:", err);
+  });
+}
+
+
 if (!lang) { showLanguageSelection(); } else { showQuizTypeSelection(); }
 </script>
 </body>
