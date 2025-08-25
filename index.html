@@ -152,9 +152,10 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyEjEXaJJY3bj
 function saveDataToSheet(type, data) {
   console.log("Sending data:", { type: type, data: data }); // سجّل البيانات المرسلة
   fetch(GOOGLE_SCRIPT_URL, {
-    method: "POST",
-    body: JSON.stringify({ type: type, data: data }),
-    headers: { "Content-Type": "application/json" }
+  method: "POST",
+  body: JSON.stringify({ type: type, data: data }),
+  headers: { "Content-Type": "application/json" },
+  mode: 'no-cors'  
   })
   .then(res => res.text())
   .then(res => console.log("تم الحفظ:", res))
