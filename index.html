@@ -1,563 +1,944 @@
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
+
 <head>
-  
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نظام الاختبارات - ميتسوبيشي</title>
-  <style>
-    body {
-      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
-      background: #140505;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .container {
-      width: 80%;
-      max-width: 600px;
-      background: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-      position: relative;
-      z-index: 2;
-      margin-top: 150px;
-      max-height: 40vh;
-      overflow-y: auto;
-      margin-top: 250px;
-    }
-    h1, h2 {
-      text-align: center;
-      color: #B3000F;
-      margin-bottom: 20px; 
-      font-size: 1.5rem;
-    }
-    button {
-      display: block;
-      width: 100%;
-      margin: 10px 0;
-      padding: 12px;
-      font-size: 1rem;
-      font-weight: bold;
-      background: linear-gradient(145deg, #9e020f, #460107);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.25s ease-in-out;
-    }
-    button:hover {
-      background: linear-gradient(145deg, #7A000B, #4D0006);
-      transform: translateY(-7px);
-      box-shadow: 0 4px 8px rgba(179,0,15,0.4);
-    }
-    .back-btn {
-      background: linear-gradient(145deg, #555, #272727);
-    }
-    .back-btn:hover {
-      background: linear-gradient(145deg, #333, #111);
-    }
-    .question {
-      background: #fdfdfd;
-      padding: 12px;
-      margin: 8px 0;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-    }
-    .option {
-      display: block;
-      margin: 5px 0;
-    }
-    input[type="password"], 
-    input[type="text"], 
-    textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 14px;
-      box-sizing: border-box;
-    }
-    textarea { resize: none; }
-    @media (max-width: 600px) {
-      h1, h2 { font-size: 1.2rem; }
-    }
-    .animation-container {
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  perspective: 800px;
-  z-index: 1;
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>نظام الاختبارات - ميتسوبيشي</title>
+
+<style>
+
+body {
+
+font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+
+background: #140505;
+
+margin: 0;
+
+padding: 0;
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+height: 100vh;
+
 }
+
+.container {
+
+width: 80%;
+
+max-width: 600px;
+
+background: #fff;
+
+padding: 20px;
+
+border-radius: 12px;
+
+box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+
+position: relative;
+
+z-index: 2;
+
+margin-top: 150px;
+
+max-height: 40vh;
+
+overflow-y: auto;
+
+margin-top: 250px;
+
+}
+
+h1, h2 {
+
+text-align: center;
+
+color: #B3000F;
+
+margin-bottom: 20px;
+
+font-size: 1.5rem;
+
+}
+
+button {
+
+display: block;
+
+width: 100%;
+
+margin: 10px 0;
+
+padding: 12px;
+
+font-size: 1rem;
+
+font-weight: bold;
+
+background: linear-gradient(145deg, #9e020f, #460107);
+
+color: white;
+
+border: none;
+
+border-radius: 8px;
+
+cursor: pointer;
+
+transition: all 0.25s ease-in-out;
+
+}
+
+button:hover {
+
+background: linear-gradient(145deg, #7A000B, #4D0006);
+
+transform: translateY(-7px);
+
+box-shadow: 0 4px 8px rgba(179,0,15,0.4);
+
+}
+
+.back-btn {
+
+background: linear-gradient(145deg, #555, #272727);
+
+}
+
+.back-btn:hover {
+
+background: linear-gradient(145deg, #333, #111);
+
+}
+
+.question {
+
+background: #fdfdfd;
+
+padding: 12px;
+
+margin: 8px 0;
+
+border-radius: 8px;
+
+border: 1px solid #ddd;
+
+}
+
+.option {
+
+display: block;
+
+margin: 5px 0;
+
+}
+
+input[type="password"],
+
+input[type="text"],
+
+textarea {
+
+width: 100%;
+
+padding: 10px;
+
+margin: 10px 0;
+
+border: 1px solid #ccc;
+
+border-radius: 8px;
+
+font-size: 14px;
+
+box-sizing: border-box;
+
+}
+
+textarea { resize: none; }
+
+@media (max-width: 600px) {
+
+h1, h2 { font-size: 1.2rem; }
+
+}
+
+.animation-container {
+
+position: absolute;
+
+top: 20%;
+
+left: 50%;
+
+transform: translate(-50%, -50%);
+
+perspective: 800px;
+
+z-index: 1;
+
+}
+
 .cube {
-  position: relative;
-  width: 200px;
-  height: 200px;
-  transform-style: preserve-3d;
-  animation: cubeRotate 8s infinite linear;
+
+position: relative;
+
+width: 200px;
+
+height: 200px;
+
+transform-style: preserve-3d;
+
+animation: cubeRotate 8s infinite linear;
+
 }
+
 .cube-face {
-  position: absolute;
-  width: 150px;
-  height: 200px;
-  background: rgba(37, 4, 7, 0.8);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 1.2rem;
-  border: 2px solid #fff;
+
+position: absolute;
+
+width: 150px;
+
+height: 200px;
+
+background: rgba(37, 4, 7, 0.8);
+
+color: white;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+font-weight: bold;
+
+font-size: 1.2rem;
+
+border: 2px solid #fff;
+
 }
-.front  { transform: rotateY(0deg) translateZ(100px); }
-.back   { transform: rotateY(180deg) translateZ(100px); }
-.right  { transform: rotateY(90deg) translateZ(100px); }
-.left   { transform: rotateY(-90deg) translateZ(100px); }
-.top    { transform: rotateX(90deg) translateZ(100px); }
+
+.front { transform: rotateY(0deg) translateZ(100px); }
+
+.back { transform: rotateY(180deg) translateZ(100px); }
+
+.right { transform: rotateY(90deg) translateZ(100px); }
+
+.left { transform: rotateY(-90deg) translateZ(100px); }
+
+.top { transform: rotateX(90deg) translateZ(100px); }
+
 .bottom { transform: rotateX(-90deg) translateZ(100px); }
 
 @keyframes cubeRotate {
-  from { transform: rotateX(0deg) rotateY(0deg); }
-  to { transform: rotateX(360deg) rotateY(360deg); }
+from { transform: rotateX(0deg) rotateY(0deg); }
+to { transform: rotateX(360deg) rotateY(360deg); }
 }
-  </style>
+</style>
+
 </head>
+
 <body>
-    <!-- مكانه داخل <body> -->
+
+<!-- مكانه داخل <body> -->
+
 <div class="animation-container">
-  <div class="cube">
-    <div class="cube-face front">Determination</div>
-    <div class="cube-face back">Hard Work</div>
-    <div class="cube-face right">Creativity</div>
-    <div class="cube-face left">Growth</div>
-    <div class="cube-face top">Success</div>
-    <div class="cube-face bottom">Excellence</div>
-  </div>
+
+<div class="cube">
+
+<div class="cube-face front">Determination</div>
+
+<div class="cube-face back">Hard Work</div>
+
+<div class="cube-face right">Creativity</div>
+
+<div class="cube-face left">Growth</div>
+
+<div class="cube-face top">Success</div>
+
+<div class="cube-face bottom">Excellence</div>
+
 </div>
-  <div class="container" id="app"></div>
+
+</div>
+
+<div class="container" id="app"></div>
 
 <script>
+
 var lang = localStorage.getItem('quizLang') || null;
+
 var selectedQuiz = null;
 
- // ⚠ ضع رابط Google Apps Script هنا
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz1zDeOHgtCiqKeokk24V1XoSbFKJr-S6xXyE53hZ-nZP3uESohdUbi3aK613ZBDgox/exec";
+// --- كل الأسئلة كاملة ---
 
-function saveDataToSheet(type, data) {
-  console.log("Sending data:", { type: type, data: data }); // سجّل البيانات المرسلة
-  fetch(GOOGLE_SCRIPT_URL, {
-  method: "POST",
-  body: JSON.stringify({ type: type, data: data }),
-  headers: { "Content-Type": "application/json" },
-  mode: 'no-cors'  
-  })
-  .then(res => res.text())
-  .then(res => console.log("تم الحفظ:", res))
-  .catch(err => console.error("خطأ:", err));
+var quizzes = {
+
+DOS: {
+
+ar: { title: "اختبار تجربة العميل", questions: [
+
+{ q: "السؤال الأول", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 1 },
+
+{ q: "السؤال الثاني", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الثالث", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الرابع", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الخامس", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال السادس", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال السابع", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الثامن", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال التاسع", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال العاشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الحادي عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الثاني عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الثالث عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الرابع عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الخامس عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال السادس عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال السابع عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الثامن عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال التاسع عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال العشرون", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 }
+
+] },
+
+en: { title: "Customer Experience Quiz", questions: [
+
+{ q: "Question 1", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 1 },
+
+{ q: "Question 2", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 3", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 4", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 5", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 6", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 7", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 8", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 9", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 10", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 11", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 12", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 13", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 14", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 15", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 16", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 17", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 18", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 19", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 20", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 }
+
+] }
+
+},
+
+
+CustomerExperience: {
+
+ar: { title: "اختبار تجربة العميل", questions: [
+
+{ q: "السؤال الأول", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 1 },
+
+{ q: "السؤال الثاني", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الثالث", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الرابع", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الخامس", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال السادس", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال السابع", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الثامن", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال التاسع", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال العاشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الحادي عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الثاني عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الثالث عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الرابع عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الخامس عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال السادس عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال السابع عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الثامن عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال التاسع عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال العشرون", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 }
+
+] },
+
+en: { title: "Customer Experience Quiz", questions: [
+
+{ q: "Question 1", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 1 },
+
+{ q: "Question 2", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 3", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 4", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 5", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 6", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 7", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 8", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 9", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 10", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 11", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 12", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 13", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 14", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 15", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 16", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 17", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 18", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 19", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 20", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 }
+
+] }
+
+},
+
+serviceadvisor: {
+
+ar: { title: "اختبار مستشار الخدمة", questions: [
+
+{ q: "السؤال الأول", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 1 },
+
+{ q: "السؤال الثاني", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الثالث", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الرابع", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الخامس", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال السادس", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال السابع", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الثامن", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال التاسع", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال العاشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الحادي عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الثاني عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الثالث عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الرابع عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الخامس عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال السادس عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال السابع عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الثامن عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال التاسع عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال العشرون", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 }
+
+] },
+
+en: { title: "Service Advisor Quiz", questions: [
+
+{ q: "Question 1", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 1 },
+
+{ q: "Question 2", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 3", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 4", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 5", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 6", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 7", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 8", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 9", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 10", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 11", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 12", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 13", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 14", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 15", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 16", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 17", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 18", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 19", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 20", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 }
+
+] }
+
+},
+
+spareparts: {
+
+ar: { title: "اختبار قطع الغيار", questions: [
+
+{ q: "السؤال الأول", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 1 },
+
+{ q: "السؤال الثاني", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الثالث", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الرابع", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الخامس", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال السادس", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال السابع", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الثامن", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال التاسع", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال العاشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الحادي عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الثاني عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الثالث عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الرابع عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الخامس عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال السادس عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال السابع عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال الثامن عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال التاسع عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
+
+{ q: "السؤال العشرون", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 }
+
+] },
+
+en: { title: "Spare Parts Quiz", questions: [
+
+{ q: "Question 1", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 1 },
+
+{ q: "Question 2", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 3", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 4", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 5", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 6", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 7", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 8", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 9", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 10", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 11", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 12", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 13", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 14", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 15", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 16", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 17", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 18", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 19", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
+
+{ q: "Question 20", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 }
+
+] }
+
 }
 
-// --- كل الأسئلة كاملة ---
-var quizzes = {
-  DOS: {
-    ar: { title: "اختبار تجربة العميل", questions: [
-      { q: "السؤال الأول", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 1 },
-    { q: "السؤال الثاني", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الثالث", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الرابع", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الخامس", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال السادس", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال السابع", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الثامن", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال التاسع", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال العاشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الحادي عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الثاني عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الثالث عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الرابع عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الخامس عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال السادس عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال السابع عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الثامن عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال التاسع عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال العشرون", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 }
-    ] },
-    en: { title: "Customer Experience Quiz", questions: [
-       { q: "Question 1", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 1 },
-    { q: "Question 2", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 3", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 4", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 5", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 6", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 7", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 8", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 9", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 10", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 11", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 12", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 13", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 14", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 15", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 16", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 17", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 18", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 19", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 20", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 }
-    ] }
-  },
-  
-  CustomerExperience: {
-    ar: { title: "اختبار تجربة العميل", questions: [
-      { q: "السؤال الأول", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 1 },
-    { q: "السؤال الثاني", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الثالث", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الرابع", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الخامس", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال السادس", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال السابع", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الثامن", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال التاسع", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال العاشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الحادي عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الثاني عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الثالث عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الرابع عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الخامس عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال السادس عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال السابع عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الثامن عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال التاسع عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال العشرون", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 }
-    ] },
-    en: { title: "Customer Experience Quiz", questions: [
-       { q: "Question 1", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 1 },
-    { q: "Question 2", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 3", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 4", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 5", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 6", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 7", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 8", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 9", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 10", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 11", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 12", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 13", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 14", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 15", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 16", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 17", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 18", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 19", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 20", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 }
-    ] }
-  },
-
-  serviceadvisor: {
-    ar: { title: "اختبار مستشار الخدمة", questions: [
-      { q: "السؤال الأول", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 1 },
-    { q: "السؤال الثاني", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الثالث", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الرابع", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الخامس", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال السادس", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال السابع", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الثامن", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال التاسع", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال العاشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الحادي عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الثاني عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الثالث عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الرابع عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الخامس عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال السادس عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال السابع عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الثامن عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال التاسع عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال العشرون", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 }
-    ] },
-    en: { title: "Service Advisor Quiz", questions: [
-       { q: "Question 1", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 1 },
-    { q: "Question 2", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 3", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 4", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 5", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 6", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 7", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 8", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 9", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 10", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 11", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 12", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 13", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 14", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 15", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 16", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 17", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 18", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 19", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 20", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 }
-    ] }
-  },
-
-  spareparts: {
-    ar: { title: "اختبار قطع الغيار", questions: [
-      { q: "السؤال الأول", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 1 },
-    { q: "السؤال الثاني", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الثالث", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الرابع", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الخامس", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال السادس", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال السابع", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الثامن", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال التاسع", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال العاشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الحادي عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الثاني عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الثالث عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الرابع عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الخامس عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال السادس عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال السابع عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال الثامن عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال التاسع عشر", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 },
-    { q: "السؤال العشرون", options: ["الخيار الأول", "الخيار الثاني", "الخيار الثالث", "الخيار الرابع"], answer: 0 }
-    ] },
-    en: { title: "Spare Parts Quiz", questions: [
-       { q: "Question 1", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 1 },
-    { q: "Question 2", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 3", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 4", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 5", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 6", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 7", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 8", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 9", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 10", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 11", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 12", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 13", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 14", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 15", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 16", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 17", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 18", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 19", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 },
-    { q: "Question 20", options: ["Option 1", "Option 2", "Option 3", "Option 4"], answer: 0 }
-    ] }
-  }
 };
 
 // باقي الدوال نفس ما شرحناها (اختيار لغة → كلمة مرور → إدخال بيانات → عرض أسئلة → حساب نتيجة)
 
 function showLanguageSelection() {
-  document.getElementById('app').innerHTML =
-    '<h1>اختر اللغة / Choose Language</h1>' +
-    '<button onclick="setLanguage(\'ar\')">العربية</button>' +
-    '<button onclick="setLanguage(\'en\')">English</button>';
+
+document.getElementById('app').innerHTML =
+
+'<h1>اختر اللغة / Choose Language</h1>' +
+
+'<button onclick="setLanguage(\'ar\')">العربية</button>' +
+
+'<button onclick="setLanguage(\'en\')">English</button>';
+
 }
+
 function setLanguage(selectedLang) { lang = selectedLang; localStorage.setItem('quizLang', lang); showQuizTypeSelection(); }
+
 function showQuizTypeSelection() {
-  var title = lang === 'ar' ? " اختر نوع الدورة" : "Choose Course Type";
-  var back = lang === 'ar' ? "↩ رجوع" : "↩ Back";
-  document.getElementById('app').innerHTML =
-    '<h2>' + title + '</h2>' +
-    '<button onclick="selectedQuiz=\'DOS\';showPasswordInput()">🔑 ' + (lang === 'ar' ? 'معيار تشغيل الوكالة' : 'Dealership Operation Standard') + '</button>' +
-    '<button onclick="selectedQuiz=\'CustomerExperience\';showPasswordInput()">💼 ' + (lang === 'ar' ? 'تجربة العميل' : 'Customer Experience') + '</button>' +
-    '<button onclick="selectedQuiz=\'serviceadvisor\';showPasswordInput()">🛎 ' + (lang === 'ar' ? 'مستشار الخدمة' : 'Service Advisor') + '</button>' +
-    '<button onclick="selectedQuiz=\'spareparts\';showPasswordInput()">⚙ ' + (lang === 'ar' ? 'قطع الغيار' : 'Spare Parts') + '</button>' +
-    '<button class="back-btn" onclick="clearLanguage()">' + back + '</button>';
+
+var title = lang === 'ar' ? " اختر نوع الدورة" : "Choose Course Type";
+
+var back = lang === 'ar' ? "↩ رجوع" : "↩ Back";
+
+document.getElementById('app').innerHTML =
+
+'<h2>' + title + '</h2>' +
+
+'<button onclick="selectedQuiz=\'DOS\';showPasswordInput()">🔑 ' + (lang === 'ar' ? 'معيار تشغيل الوكالة' : 'Dealership Operation Standard') + '</button>' +
+
+'<button onclick="selectedQuiz=\'CustomerExperience\';showPasswordInput()">💼 ' + (lang === 'ar' ? 'تجربة العميل' : 'Customer Experience') + '</button>' +
+
+'<button onclick="selectedQuiz=\'serviceadvisor\';showPasswordInput()">🛎 ' + (lang === 'ar' ? 'مستشار الخدمة' : 'Service Advisor') + '</button>' +
+
+'<button onclick="selectedQuiz=\'spareparts\';showPasswordInput()">⚙ ' + (lang === 'ar' ? 'قطع الغيار' : 'Spare Parts') + '</button>' +
+
+'<button class="back-btn" onclick="clearLanguage()">' + back + '</button>';
+
 }
+
 function clearLanguage() { localStorage.removeItem('quizLang'); lang = null; showLanguageSelection(); }
+
 function showPasswordInput() {
-  var today = new Date();
-  var day = String(today.getDate()).padStart(2, '0');
-  var month = String(today.getMonth() + 1).padStart(2, '0');
-  var correctPassword = "00" + day + month;
-  document.getElementById('app').innerHTML =
-    '<h2>' + (lang === 'ar' ? 'أدخل كلمة المرور' : 'Enter Password') + '</h2>' +
-    '<input type="password" id="passwordInput" placeholder="' + (lang === 'ar' ? 'كلمة المرور' : 'Password') + '" />' +
-    '<button onclick="checkPassword(\'' + correctPassword + '\')">' + (lang === 'ar' ? 'تأكيد' : 'Confirm') + '</button>' +
-    '<button class="back-btn" onclick="showQuizTypeSelection()">' + (lang === 'ar' ? 'رجوع' : 'Back') + '</button>';
+
+var today = new Date();
+
+var day = String(today.getDate()).padStart(2, '0');
+
+var month = String(today.getMonth() + 1).padStart(2, '0');
+
+var correctPassword = "00" + day + month;
+
+document.getElementById('app').innerHTML =
+
+'<h2>' + (lang === 'ar' ? 'أدخل كلمة المرور' : 'Enter Password') + '</h2>' +
+
+'<input type="password" id="passwordInput" placeholder="' + (lang === 'ar' ? 'كلمة المرور' : 'Password') + '" />' +
+
+'<button onclick="checkPassword(\'' + correctPassword + '\')">' + (lang === 'ar' ? 'تأكيد' : 'Confirm') + '</button>' +
+
+'<button class="back-btn" onclick="showQuizTypeSelection()">' + (lang === 'ar' ? 'رجوع' : 'Back') + '</button>';
+
 }
+
 function checkPassword(correctPassword) {
-  var enteredPassword = document.getElementById('passwordInput').value;
-  if (enteredPassword === correctPassword) { showEmployeeInfoForm(); }
-  else { alert(lang === 'ar' ? 'كلمة مرور خاطئة! حاول مرة أخرى.' : 'Incorrect password! Try again.'); }
+
+var enteredPassword = document.getElementById('passwordInput').value;
+
+if (enteredPassword === correctPassword) { showEmployeeInfoForm(); }
+
+else { alert(lang === 'ar' ? 'كلمة مرور خاطئة! حاول مرة أخرى.' : 'Incorrect password! Try again.'); }
+
 }
+
 function showEmployeeInfoForm() {
-  var back = lang === 'ar' ? "↩ رجوع" : "↩ Back";
-  var nameLbl = lang === 'ar' ? "الاسم" : "Name";
-  var idLbl = lang === 'ar' ? "الرقم الوظيفي" : "Employee ID";
-  var titleLbl = lang === 'ar' ? "المسمى الوظيفي" : "Job Title";
-  var nextBtn = lang === 'ar' ? "بدء الاختبار" : "Start Quiz";
 
-  document.getElementById('app').innerHTML =
-    '<h2>' + (lang === 'ar' ? 'بيانات الموظف' : 'Employee Information') + '</h2>' +
-    '<input type="text" id="empName" placeholder="' + nameLbl + '" />' +
-    '<input type="text" id="empId" placeholder="' + idLbl + '" />' +
-    '<input type="text" id="empTitle" placeholder="' + titleLbl + '" />' +
-    '<button onclick="validateEmployeeInfo()">' + nextBtn + '</button>' +
-    '<button class="back-btn" onclick="showQuizTypeSelection()">' + back + '</button>';
+var back = lang === 'ar' ? "↩ رجوع" : "↩ Back";
+
+var nameLbl = lang === 'ar' ? "الاسم" : "Name";
+
+var idLbl = lang === 'ar' ? "الرقم الوظيفي" : "Employee ID";
+
+var titleLbl = lang === 'ar' ? "المسمى الوظيفي" : "Job Title";
+
+var nextBtn = lang === 'ar' ? "بدء الاختبار" : "Start Quiz";
+
+document.getElementById('app').innerHTML =
+
+'<h2>' + (lang === 'ar' ? 'بيانات الموظف' : 'Employee Information') + '</h2>' +
+
+'<input type="text" id="empName" placeholder="' + nameLbl + '" />' +
+
+'<input type="text" id="empId" placeholder="' + idLbl + '" />' +
+
+'<input type="text" id="empTitle" placeholder="' + titleLbl + '" />' +
+
+'<button onclick="validateEmployeeInfo()">' + nextBtn + '</button>' +
+
+'<button class="back-btn" onclick="showQuizTypeSelection()">' + back + '</button>';
+
 }
+
 function validateEmployeeInfo() {
-  var name = document.getElementById('empName').value.trim();
-  var id = document.getElementById('empId').value.trim();
-  var title = document.getElementById('empTitle').value.trim();
 
-  if (!name || !id || !title) {
-    alert(lang === 'ar' ? "الرجاء إدخال جميع البيانات" : "Please fill all fields");
-    return;
-  }
-  localStorage.setItem("empName", name);
-  localStorage.setItem("empId", id);
-  localStorage.setItem("empTitle", title);
-  showQuiz();
+var name = document.getElementById('empName').value.trim();
+
+var id = document.getElementById('empId').value.trim();
+
+var title = document.getElementById('empTitle').value.trim();
+
+if (!name || !id || !title) {
+
+alert(lang === 'ar' ? "الرجاء إدخال جميع البيانات" : "Please fill all fields");
+
+return;
+
 }
+
+localStorage.setItem("empName", name);
+
+localStorage.setItem("empId", id);
+
+localStorage.setItem("empTitle", title);
+
+showQuiz();
+
+}
+
 function showSubmissionConfirmation(score) {
-  document.getElementById('app').innerHTML =
-    '<h2>' + (lang === 'ar' ? 'تم إرسال الاختبار' : 'Quiz Submitted') + '</h2>' +
-    '<p>' + (lang === 'ar' ? 'نتيجتك: ' : 'Your score: ') + score + '/' + quizzes[selectedQuiz][lang].questions.length + '</p>' +
-    '<button onclick="showCourseEvaluation()">' + (lang === 'ar' ? 'تقييم الدورة' : 'Evaluate Course') + '</button>';
+
+document.getElementById('app').innerHTML =
+
+'<h2>' + (lang === 'ar' ? 'تم إرسال الاختبار' : 'Quiz Submitted') + '</h2>' +
+
+'<p>' + (lang === 'ar' ? 'نتيجتك: ' : 'Your score: ') + score + '/' + quizzes[selectedQuiz][lang].questions.length + '</p>' +
+
+'<button onclick="showCourseEvaluation()">' + (lang === 'ar' ? 'تقييم الدورة' : 'Evaluate Course') + '</button>';
+
 }
 
 function showCourseEvaluation() {
-  var options = [
-    lang === 'ar' ? "أوافق بشدة" : "Strongly Agree",
-    lang === 'ar' ? "أوافق" : "Agree",
-    lang === 'ar' ? "محايد" : "Neutral",
-    lang === 'ar' ? "لا أوافق" : "Disagree",
-    lang === 'ar' ? "لا أوافق بشدة" : "Strongly Disagree"
-  ];
 
-  var questions = [
-    lang === 'ar' ? "1- كان شرح المدرب سهل الفهم، وكانت المحتويات واضحة" : "1- The trainer's explanation was easy to understand, and the content was clear.",
-    lang === 'ar' ? "2- شجع المدرب الجميع على المشاركة النشطة في التدريب والتواصل مع الآخرين" : "2- The trainer encouraged everyone to actively participate in training and communicate with others.",
-    lang === 'ar' ? "3- كان لدى المدرب معرفة واسعة حول مواضيع التدريب" : "3- The trainer had extensive knowledge about the training topics.",
-    lang === 'ar' ? "4- كان المدرب متجاوبًا جدًا مع جميع أسئلتكم" : "4- The trainer was very responsive to all your questions.",
-    lang === 'ar' ? "5- كانت المواد التدريبية سهلة الفهم" : "5- The training materials were easy to understand.",
-    lang === 'ar' ? "6- أعتقد أن التدريب الذي تلقيته سيفيدني في عملي" : "6- I believe the training I received will benefit me in my job.",
-    lang === 'ar' ? "7- كانت مدة التدريب كافية لفهم محتوى الدورة" : "7- The duration of the training was sufficient to understand the course content.",
-    lang === 'ar' ? "8- كانت توزيع الوقت بين المحاضرات والتدريب العملي مناسبًا" : "8- The time distribution between lectures and practical training was appropriate.",
-    lang === 'ar' ? "9- كانت قاعات التدريب ومرافقه مريحة وسهلة الاستخدام، ودعمت عملية التعلم" : "9- The training rooms and facilities were comfortable and easy to use, supporting the learning process.",
-    lang === 'ar' ? "10- أود أن أوصي بهذا التدريب لزملائي" : "10- I would recommend this training to my colleagues."
-  ];
+var options = [
 
-  var html = '<h2>' + (lang === 'ar' ? 'تقييم الدورة' : 'Course Evaluation') + '</h2>';
+lang === 'ar' ? "أوافق بشدة" : "Strongly Agree",
 
-  questions.forEach(function(q, idx) {
-    html += '<div class="question"><p>' + q + '</p>';
-    options.forEach(function(opt, i) {
-      html += '<label class="option"><input type="radio" name="eval' + idx + '" value="' + opt + '"> ' + opt + '</label>';
-    });
-    html += '</div>';
-  });
+lang === 'ar' ? "أوافق" : "Agree",
 
-  html += '<p>' + (lang === 'ar' ? 'إذا كان لديك أي تعليقات حول هذه الدورة، يرجى كتابتها هنا:' : 'If you have any comments about this course, please write them here:') + '</p>';
-  html += '<textarea id="courseComment" rows="4" placeholder="' + (lang === 'ar' ? 'اكتب تعليقك هنا...' : 'Write your comment here...') + '"></textarea>';
+lang === 'ar' ? "محايد" : "Neutral",
 
-  html += '<button onclick="submitRating()">' + (lang === 'ar' ? 'إرسال' : 'Submit') + '</button>';
+lang === 'ar' ? "لا أوافق" : "Disagree",
 
-  document.getElementById('app').innerHTML = html;
+lang === 'ar' ? "لا أوافق بشدة" : "Strongly Disagree"
 
-  
+];
+
+var questions = [
+
+lang === 'ar' ? "1- كان شرح المدرب سهل الفهم، وكانت المحتويات واضحة" : "1- The trainer's explanation was easy to understand, and the content was clear.",
+
+lang === 'ar' ? "2- شجع المدرب الجميع على المشاركة النشطة في التدريب والتواصل مع الآخرين" : "2- The trainer encouraged everyone to actively participate in training and communicate with others.",
+
+lang === 'ar' ? "3- كان لدى المدرب معرفة واسعة حول مواضيع التدريب" : "3- The trainer had extensive knowledge about the training topics.",
+
+lang === 'ar' ? "4- كان المدرب متجاوبًا جدًا مع جميع أسئلتكم" : "4- The trainer was very responsive to all your questions.",
+
+lang === 'ar' ? "5- كانت المواد التدريبية سهلة الفهم" : "5- The training materials were easy to understand.",
+
+lang === 'ar' ? "6- أعتقد أن التدريب الذي تلقيته سيفيدني في عملي" : "6- I believe the training I received will benefit me in my job.",
+
+lang === 'ar' ? "7- كانت مدة التدريب كافية لفهم محتوى الدورة" : "7- The duration of the training was sufficient to understand the course content.",
+
+lang === 'ar' ? "8- كانت توزيع الوقت بين المحاضرات والتدريب العملي مناسبًا" : "8- The time distribution between lectures and practical training was appropriate.",
+
+lang === 'ar' ? "9- كانت قاعات التدريب ومرافقه مريحة وسهلة الاستخدام، ودعمت عملية التعلم" : "9- The training rooms and facilities were comfortable and easy to use, supporting the learning process.",
+
+lang === 'ar' ? "10- أود أن أوصي بهذا التدريب لزملائي" : "10- I would recommend this training to my colleagues."
+
+];
+
+var html = '<h2>' + (lang === 'ar' ? 'تقييم الدورة' : 'Course Evaluation') + '</h2>';
+
+questions.forEach(function(q, idx) {
+
+html += '<div class="question"><p>' + q + '</p>';
+
+options.forEach(function(opt, i) {
+
+html += '<label class="option"><input type="radio" name="eval' + idx + '" value="' + opt + '"> ' + opt + '</label>';
+
+});
+
+html += '</div>';
+
+});
+
+html += '<p>' + (lang === 'ar' ? 'إذا كان لديك أي تعليقات حول هذه الدورة، يرجى كتابتها هنا:' : 'If you have any comments about this course, please write them here:') + '</p>';
+
+html += '<textarea id="courseComment" rows="4" placeholder="' + (lang === 'ar' ? 'اكتب تعليقك هنا...' : 'Write your comment here...') + '"></textarea>';
+
+html += '<button onclick="submitRating()">' + (lang === 'ar' ? 'إرسال' : 'Submit') + '</button>';
+
+document.getElementById('app').innerHTML = html;
+
 }
 
 function submitRating() {
-  var responses = [];
-  var allAnswered = true;
+var responses = [];
+var allAnswered = true;
 
-  for (var i = 0; i < 10; i++) {
-    var selected = document.querySelector('input[name="eval' + i + '"]:checked');
-    if (selected) { 
-      responses.push(selected.value); 
-    } else { 
-      allAnswered = false; 
-      break; 
-    }
-  }
+// التحقق من كل سؤال
+for (var i = 0; i < 10; i++) {
+var selected = document.querySelector('input[name="eval' + i + '"]:checked');
+if (selected) {
+responses.push(selected.value);
+} else {
+allAnswered = false;
+break;
+}
+}
 
-  if (!allAnswered) {
-    alert(lang === 'ar' ? "الرجاء الإجابة على جميع الأسئلة قبل الإرسال" : "Please answer all questions before submitting.");
-    return;
-  }
+if (!allAnswered) {
+alert(lang === 'ar' ? "الرجاء الإجابة على جميع الأسئلة قبل الإرسال" : "Please answer all questions before submitting.");
+return;
+}
 
-  var comment = document.getElementById('courseComment').value.trim();
+var comment = document.getElementById('courseComment').value.trim();
 
-  // 📝 حفظ بيانات التقييم
-  saveDataToSheet("evaluation", {
-    name: localStorage.getItem("empName"),
-    empId: localStorage.getItem("empId"),
-    title: localStorage.getItem("empTitle"),
-    quiz: selectedQuiz,
-    answers: responses,
-    comment: comment
-  });
+// هنا تقدر ترسل البيانات لسيرفر أو تخزنها
+console.log("إجابات التقييم:", responses);
+console.log("تعليق:", comment);
 
-  alert("شكراً لتقييمك!");
-  localStorage.clear();
-  showLanguageSelection();
+alert("شكراً لتقييمك!");
+localStorage.clear();
+showLanguageSelection();
 }
 function showQuiz() {
-  var quizData = quizzes[selectedQuiz][lang];
-  var back = lang === 'ar' ? "↩ رجوع" : "↩ Back";
+var quizData = quizzes[selectedQuiz][lang];
+var back = lang === 'ar' ? "↩ رجوع" : "↩ Back";
 
-  var empInfo = '<div style="background:#f2f2f2;padding:10px;border-radius:8px;margin-bottom:15px;">' +
-    '<p><strong>' + (lang === 'ar' ? "الاسم: " : "Name: ") + '</strong>' + localStorage.getItem("empName") + '</p>' +
-    '<p><strong>' + (lang === 'ar' ? "الرقم الوظيفي: " : "Employee ID: ") + '</strong>' + localStorage.getItem("empId") + '</p>' +
-    '<p><strong>' + (lang === 'ar' ? "المسمى الوظيفي: " : "Job Title: ") + '</strong>' + localStorage.getItem("empTitle") + '</p>' +
-    '</div>';
+var empInfo = '<div style="background:#f2f2f2;padding:10px;border-radius:8px;margin-bottom:15px;">' +
+'<p><strong>' + (lang === 'ar' ? "الاسم: " : "Name: ") + '</strong>' + localStorage.getItem("empName") + '</p>' +
+'<p><strong>' + (lang === 'ar' ? "الرقم الوظيفي: " : "Employee ID: ") + '</strong>' + localStorage.getItem("empId") + '</p>' +
+'<p><strong>' + (lang === 'ar' ? "المسمى الوظيفي: " : "Job Title: ") + '</strong>' + localStorage.getItem("empTitle") + '</p>' +
+'</div>';
 
-  var quizHTML = '<h2>' + quizData.title + '</h2>' + empInfo;
+var quizHTML = '<h2>' + quizData.title + '</h2>' + empInfo;
 
-  quizData.questions.forEach(function(q, idx) {
-    quizHTML += '<div class="question"><p>' + q.q + '</p>';
-    q.options.forEach(function(opt, i) {
-      quizHTML += '<label class="option"><input type="radio" name="q' + idx + '" value="' + i + '"> ' + opt + '</label>';
-    });
-    quizHTML += '</div>';
-  });
-  quizHTML += '<button onclick="submitQuiz()">' + (lang === 'ar' ? 'إرسال' : 'Submit') + '</button>';
-  quizHTML += '<button class="back-btn" onclick="showQuizTypeSelection()">' + back + '</button>';
-  document.getElementById('app').innerHTML = quizHTML;
+quizData.questions.forEach(function(q, idx) {
+quizHTML += '<div class="question"><p>' + q.q + '</p>';
+q.options.forEach(function(opt, i) {
+quizHTML += '<label class="option"><input type="radio" name="q' + idx + '" value="' + i + '"> ' + opt + '</label>';
+});
+quizHTML += '</div>';
+});
+quizHTML += '<button onclick="submitQuiz()">' + (lang === 'ar' ? 'إرسال' : 'Submit') + '</button>';
+quizHTML += '<button class="back-btn" onclick="showQuizTypeSelection()">' + back + '</button>';
+document.getElementById('app').innerHTML = quizHTML;
 }
 function submitQuiz() {
-  var quizData = quizzes[selectedQuiz][lang];
-  var score = 0;
-  var allAnswered = true;
+var quizData = quizzes[selectedQuiz][lang];
+var score = 0;
+var allAnswered = true; // إضافة متغير للتحقق من الإجابات
 
-  quizData.questions.forEach(function(q, idx) {
-    var selected = document.querySelector('input[name="q' + idx + '"]:checked');
-    if (selected && parseInt(selected.value) === q.answer) { 
-      score++; 
-    } else if (!selected) { 
-      allAnswered = false; 
-    }
-  });
+quizData.questions.forEach(function(q, idx) {
+var selected = document.querySelector('input[name="q' + idx + '"]:checked');
+if (selected && parseInt(selected.value) === q.answer) {
+score++;
+} else if (!selected) { // تحقق مما إذا كانت الإجابة غير مختارة
+allAnswered = false; // تعيين المتغير إلى false إذا لم يتم الإجابة
+}
+});
 
-  if (!allAnswered) {
-    alert(lang === 'ar' ? "الرجاء الإجابة على جميع الأسئلة قبل الإرسال" : "Please answer all questions before submitting.");
-    return;
-  }
-
-  // 📝 حفظ بيانات الاختبار
-  saveDataToSheet("quiz", {
-    name: localStorage.getItem("empName"),
-    empId: localStorage.getItem("empId"),
-    title: localStorage.getItem("empTitle"),
-    quiz: selectedQuiz,
-    score: score
-  });
-
-  showSubmissionConfirmation(score);
+// تحقق من الإجابات
+if (!allAnswered) {
+alert(lang === 'ar' ? "الرجاء الإجابة على جميع الأسئلة قبل الإرسال" : "Please answer all questions before submitting.");
+return;
 }
 
+showSubmissionConfirmation(score);
+}
 if (!lang) { showLanguageSelection(); } else { showQuizTypeSelection(); }
 </script>
+
 </body>
-</html> 
+
+</html>
