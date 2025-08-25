@@ -146,6 +146,20 @@
 var lang = localStorage.getItem('quizLang') || null;
 var selectedQuiz = null;
 
+ // ⚠ ضع رابط Google Apps Script هنا
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyEjEXaJJY3bjoqaF7rUtDA0B4Cj4uFXva5WM5Y_pTatdc6H0NWtEIXPqdYaWPZA_qX/exec";
+
+function saveDataToSheet(type, data) {
+  fetch(GOOGLE_SCRIPT_URL, {
+    method: "POST",
+    body: JSON.stringify({ type: type, data: data }),
+    headers: { "Content-Type": "application/json" }
+  })
+  .then(res => res.text())
+  .then(res => console.log("تم الحفظ:", res))
+  .catch(err => console.error("خطأ:", err));
+}
+
 // --- كل الأسئلة كاملة ---
 var quizzes = {
   DOS: {
@@ -456,27 +470,32 @@ function submitRating() {
   var responses = [];
   var allAnswered = true;
 
-  // التحقق من كل سؤال
   for (var i = 0; i < 10; i++) {
     var selected = document.querySelector('input[name="eval' + i + '"]:checked');
-    if (selected) {
-      responses.push(selected.value);
-    } else {
-      allAnswered = false;
-      break;
+    if (selected) { 
+      responses.push(selected.value); 
+    } else { 
+      allAnswered = false; 
+      break; 
     }
   }
 
   if (!allAnswered) {
     alert(lang === 'ar' ? "الرجاء الإجابة على جميع الأسئلة قبل الإرسال" : "Please answer all questions before submitting.");
     return;
-}
+  }
 
   var comment = document.getElementById('courseComment').value.trim();
 
-  // هنا تقدر ترسل البيانات لسيرفر أو تخزنها
-  console.log("إجابات التقييم:", responses);
-  console.log("تعليق:", comment);
+  // 📝 حفظ بيانات التقييم
+  saveDataToSheet("evaluation", {
+    name: localStorage.getItem("empName"),
+    empId: localStorage.getItem("empId"),
+    title: localStorage.getItem("empTitle"),
+    quiz: selectedQuiz,
+    answers: responses,
+    comment: comment
+  });
 
   alert("شكراً لتقييمك!");
   localStorage.clear();
@@ -508,25 +527,34 @@ function showQuiz() {
 function submitQuiz() {
   var quizData = quizzes[selectedQuiz][lang];
   var score = 0;
-  var allAnswered = true; // إضافة متغير للتحقق من الإجابات
+  var allAnswered = true;
 
   quizData.questions.forEach(function(q, idx) {
     var selected = document.querySelector('input[name="q' + idx + '"]:checked');
     if (selected && parseInt(selected.value) === q.answer) { 
       score++; 
-    } else if (!selected) { // تحقق مما إذا كانت الإجابة غير مختارة
-      allAnswered = false; // تعيين المتغير إلى false إذا لم يتم الإجابة
+    } else if (!selected) { 
+      allAnswered = false; 
     }
   });
 
-  // تحقق من الإجابات
   if (!allAnswered) {
     alert(lang === 'ar' ? "الرجاء الإجابة على جميع الأسئلة قبل الإرسال" : "Please answer all questions before submitting.");
     return;
   }
 
+  // 📝 حفظ بيانات الاختبار
+  saveDataToSheet("quiz", {
+    name: localStorage.getItem("empName"),
+    empId: localStorage.getItem("empId"),
+    title: localStorage.getItem("empTitle"),
+    quiz: selectedQuiz,
+    score: score
+  });
+
   showSubmissionConfirmation(score);
 }
+
 if (!lang) { showLanguageSelection(); } else { showQuizTypeSelection(); }
 </script>
 </body>
