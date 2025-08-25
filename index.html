@@ -452,12 +452,11 @@ function showCourseEvaluation() {
   
 }
 
-
-// إرسال التقييم
 function submitRating() {
   var responses = [];
   var allAnswered = true;
 
+  // التحقق من كل سؤال
   for (var i = 0; i < 10; i++) {
     var selected = document.querySelector('input[name="eval' + i + '"]:checked');
     if (selected) {
@@ -471,13 +470,13 @@ function submitRating() {
   if (!allAnswered) {
     alert(lang === 'ar' ? "الرجاء الإجابة على جميع الأسئلة قبل الإرسال" : "Please answer all questions before submitting.");
     return;
-  }
+}
 
   var comment = document.getElementById('courseComment').value.trim();
-  var lastScore = localStorage.getItem("lastScore");
 
-  // إرسال النتيجة + التقييم
-  sendDataToSheet(lastScore, responses, comment);
+  // هنا تقدر ترسل البيانات لسيرفر أو تخزنها
+  console.log("إجابات التقييم:", responses);
+  console.log("تعليق:", comment);
 
   alert("شكراً لتقييمك!");
   localStorage.clear();
@@ -506,64 +505,29 @@ function showQuiz() {
   quizHTML += '<button class="back-btn" onclick="showQuizTypeSelection()">' + back + '</button>';
   document.getElementById('app').innerHTML = quizHTML;
 }
-// إرسال الاختبار
 function submitQuiz() {
   var quizData = quizzes[selectedQuiz][lang];
   var score = 0;
-  var allAnswered = true;
+  var allAnswered = true; // إضافة متغير للتحقق من الإجابات
 
   quizData.questions.forEach(function(q, idx) {
     var selected = document.querySelector('input[name="q' + idx + '"]:checked');
     if (selected && parseInt(selected.value) === q.answer) { 
       score++; 
-    } else if (!selected) {
-      allAnswered = false;
+    } else if (!selected) { // تحقق مما إذا كانت الإجابة غير مختارة
+      allAnswered = false; // تعيين المتغير إلى false إذا لم يتم الإجابة
     }
   });
 
+  // تحقق من الإجابات
   if (!allAnswered) {
     alert(lang === 'ar' ? "الرجاء الإجابة على جميع الأسئلة قبل الإرسال" : "Please answer all questions before submitting.");
     return;
   }
 
-  // حفظ النتيجة مؤقتًا
-  localStorage.setItem("lastScore", score);
-
-  // إرسال النتيجة إلى Google Sheet (بدون تقييم)
-  sendDataToSheet(score, [], "");
-
   showSubmissionConfirmation(score);
 }
-// إرسال البيانات إلى Google Sheet
-function sendDataToSheet(score, answers, comment) {
-  var data = {
-    name: localStorage.getItem("empName"),
-    empId: localStorage.getItem("empId"),
-    empTitle: localStorage.getItem("empTitle"),
-    quiz: selectedQuiz,
-    score: score,
-    answers: answers,
-    comment: comment
-  };
-
-  fetch("https://script.google.com/macros/s/AKfycbyvCtqV3xwYYIQUESpoC3HxJhnz_t-z2EO_GXF9ADX289knYT2YQwm1_oKgysyvt5Mj/exec", {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
-  .then(res => res.json())
-  .then(res => {
-    console.log("تم الحفظ في Google Sheet:", res);
-  })
-  .catch(err => {
-    console.error("خطأ في الإرسال:", err);
-  });
-}
-
-
 if (!lang) { showLanguageSelection(); } else { showQuizTypeSelection(); }
 </script>
 </body>
-</html>
+</html> 
